@@ -1,0 +1,35 @@
+{
+  "name": "@arquetipo28/react-cli",
+  "version": "0.0.1",
+  "description": "CLI to scaffold components, routes and some other React JS stuff.",
+  "main": "index.js",
+  "bin": {
+    "@arquetipo28/react-cli": "bin/react-cli",
+    "react-cli": "bin/react-cli"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "reactjs",
+    "react",
+    "@arquetipo28",
+    "cli",
+    "generate",
+    "scaffold",
+    "npm",
+    "package"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Arquetipo28/react-cli.git"
+  },
+  "author": "Arquetipo28",
+  "license": "ISC",
+  "dependencies": {
+    "arg": "^4.1.3",
+    "ejs": "^3.1.2",
+    "esm": "^3.2.25",
+    "inquirer": "^7.1.0"
+  }
+}

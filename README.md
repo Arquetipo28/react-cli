@@ -35,12 +35,17 @@ You can generate a new component using this design patter with the following com
 $ react-cli <action> <element-type> --name <ComponentName> 
 ```
 
-Notes that name has to be provided in PascalCasing like `User` or `NavBar` it automatically will be sufixed with `Container` and `Component` respectively
+Notes that name has to be provided in PascalCasing like `User` or `NavBar`, or spliting component wors with dashes or underscores it automatically will be sufixed with `Container` and `Component` respectively
+
 
 ## Examples
 
-Generating component with container-component design pattern
+Generating component with container-component design pattern.
+
+**Using pascal casing.**
 
 ```shell
-$ react-cli g component --name ModalBox 
+$ react-cli g component --name ModalBox  # Using pascal casing.
+$ react-cli g component --name modal-box # Using dashes
+$ react-cli g component --name modal_box # Using underscores
 ```

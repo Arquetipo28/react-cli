@@ -1,6 +1,8 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs'
 import { join, dirname } from 'path'
 import { render } from 'ejs'
+// Local Modules
+import { constantizeElementName } from './helpers'
 
 // Required paths
 const templatesPath = join(dirname(__filename), '../templates')
@@ -13,14 +15,15 @@ const defaultFormat = 'js'
 export function generateContainerComponent (elementName) {
   const format = defaultFormat
   const jsTemplatesPath = join(templatesPath, format)
+  const constantizedName = constantizeElementName(elementName)
   const containerTemplateString = readFileSync(join(jsTemplatesPath, `container.${format}`)).toString()
   const componentTemplateString = readFileSync(join(jsTemplatesPath, `component.${format}`)).toString()
   const requiredPaths = [sourcePath, containersPath, componentsPath]
   if (createRequiredPaths(requiredPaths)) {
-    const parsedContainerTemplate = render(containerTemplateString, { elementName })
-    const parsedComponentTemplate = render(componentTemplateString, { elementName })
-    const containerFile = writeFileSync(join(`${containersPath}/${elementName}Container.${format}`), parsedContainerTemplate)
-    const componentFile = writeFileSync(join(`${componentsPath}/${elementName}Component.${format}`), parsedComponentTemplate)  
+    const parsedContainerTemplate = render(containerTemplateString, { elementName: constantizedName })
+    const parsedComponentTemplate = render(componentTemplateString, { elementName: constantizedName })
+    const containerFile = writeFileSync(join(`${containersPath}/${constantizedName}Container.${format}`), parsedContainerTemplate)
+    const componentFile = writeFileSync(join(`${componentsPath}/${constantizedName}Component.${format}`), parsedComponentTemplate)  
   }
 }
 

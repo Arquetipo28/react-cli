@@ -1,5 +1,5 @@
 import React from 'react'
-import <%= elementName %>Component from '../components/<%= elementName %>Component'
+import <%= elementName %>Component from '<%= componentPath %>Component'
 
 export const <%= elementName %>Container = () => {
   const props = {}

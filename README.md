@@ -37,6 +37,22 @@ $ react-cli <action> <element-type> --name <ComponentName>
 
 Notes that name has to be provided in PascalCasing like `User` or `NavBar`, or spliting component wors with dashes or underscores it automatically will be sufixed with `Container` and `Component` respectively
 
+## Wrapped components
+You can also wrap your components to allow you to isolate your component styles or library files from the rest of the application
+
+### Structure
+```
+src
+|__ components/
+|_____ NavBar/
+|________ NavBarComponent.js
+|__ containers/
+|_____ NavBar/
+|________ NavBarContainer.js
+
+```
+
+
 
 ## Examples
 
@@ -48,4 +64,11 @@ Generating component with container-component design pattern.
 $ react-cli g component --name ModalBox  # Using pascal casing.
 $ react-cli g component --name modal-box # Using dashes
 $ react-cli g component --name modal_box # Using underscores
+```
+
+**Using wrapped components**
+
+```shell
+$ react-cli g component --name ModalBox --wrapped
+$ react-cli g component --name ModalBox -w
 ```

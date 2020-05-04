@@ -1,6 +1,6 @@
 {
   "name": "@arquetipo28/react-cli",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "CLI to scaffold components, routes and some other React JS stuff.",
   "main": "index.js",
   "bin": {

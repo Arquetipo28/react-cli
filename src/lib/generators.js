@@ -1,8 +1,8 @@
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs'
+import { readFileSync, writeFileSync } from 'fs'
 import { join, dirname } from 'path'
 import { render } from 'ejs'
 // Local Modules
-import { constantizeElementName } from './helpers'
+import { constantizeElementName, createRequiredPaths, buildComponentPath } from './helpers'
 
 // Required paths
 const templatesPath = join(dirname(__filename), '../templates')
@@ -18,8 +18,8 @@ export function generateContainerComponent (elementName, { wrapped }) {
   const constantizedName = constantizeElementName(elementName)
   const containerTemplateString = readFileSync(join(jsTemplatesPath, `container.${format}`)).toString()
   const componentTemplateString = readFileSync(join(jsTemplatesPath, `component.${format}`)).toString()
-  const componentPath = buildComponentPath(constantizedName, { wrapped, type: 'component' }) || constantizedName
-  const containerPath = buildComponentPath(constantizedName, { wrapped, type: 'container' }) || constantizedName
+  const componentPath = buildComponentPath(constantizedName, { wrapped, elementPath: componentsPath }) || constantizedName
+  const containerPath = buildComponentPath(constantizedName, { wrapped, elementPath: containersPath }) || constantizedName
   const requiredPaths = [sourcePath, containersPath, componentsPath, componentPath, containerPath]
   if (createRequiredPaths(requiredPaths)) {
     const componentRelativePath = `${wrapped ? `../../components/${constantizedName}/` : '../components/'}${constantizedName}`
@@ -36,23 +36,3 @@ export function generateContainerComponent (elementName, { wrapped }) {
   }
 }
 
-function buildComponentPath(constantizedName, { wrapped, type }) {
-  if (!wrapped) return false
-
-  const selectedPath = type === 'component' ? componentsPath : containersPath 
-  return join(selectedPath, constantizedName)
-}
-
-function createRequiredPaths(lookedPaths) {
-  try {
-    for (const lookedPath of lookedPaths) {
-      if (existsSync(lookedPath)) continue
-      if (!lookedPath) continue
-
-      mkdirSync(lookedPath, '777')
-    }
-    return true
-  } catch {
-    return false
-  }
-}

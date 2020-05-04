@@ -1,3 +1,6 @@
+import { mkdirSync, existsSync } from 'fs'
+import { join } from 'path'
+
 function isSplited(string) {
   if (hasSpaces(string)) {
     return ' '
@@ -44,4 +47,24 @@ export function constantizeElementName(elementName) {
   } else {
     return capitalizeString(elementName)
   }
+}
+
+export function createRequiredPaths(lookedPaths) {
+  try {
+    for (const lookedPath of lookedPaths) {
+      if (existsSync(lookedPath)) continue
+      if (!lookedPath) continue
+
+      mkdirSync(lookedPath, '777')
+    }
+    return true
+  } catch {
+    return false
+  }
+}
+
+export function buildComponentPath(constantizedName, { wrapped, elementPath }) {
+  if (!wrapped) return false
+
+  return join(elementPath, constantizedName)
 }

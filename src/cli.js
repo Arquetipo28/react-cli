@@ -8,9 +8,11 @@ function parseArgumentToOptions(rawArgs) {
   const args = arg(
     {
       '--yes': Boolean,
-      '-y': '--yes',
+      '--wrapped': Boolean,
       '--name': String,
-      '-n': '--name'
+      '-y': '--yes',
+      '-n': '--name',
+      '-w': '--wrapped'
     },
     {
       argv: rawArgs.slice(2)
@@ -19,6 +21,7 @@ function parseArgumentToOptions(rawArgs) {
 
   return {
     elementName: args['--name'],
+    wrapped: args['--wrapped'],
     elementAction: args._[0],
     elementType: args._[1]
   };
@@ -26,11 +29,11 @@ function parseArgumentToOptions(rawArgs) {
 
 
 
-function executeAction(action, { elementType, elementName }) {
+function executeAction(action, { elementType, elementName, wrapped }) {
   switch (action) {
     case 'g': {
       if (elementType === 'component' || elementType === 'c') {
-        generateContainerComponent(elementName)
+        generateContainerComponent(elementName, { wrapped })
       }
     }
     default: {
@@ -41,8 +44,8 @@ function executeAction(action, { elementType, elementName }) {
 
 export function cli(args) {
   const options = parseArgumentToOptions(args);
-  const { elementAction, elementType, elementName } = options
+  const { elementAction, elementType, elementName, wrapped } = options
 
-  executeAction(elementAction, { elementType, elementName });
+  executeAction(elementAction, { elementType, elementName, wrapped });
   console.log(options);
 }
